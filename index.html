@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Rainbow Dreams</title>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1f00d0beadf87bad7d275c174616e048f8b573fc/dist/aframe-master.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <img id="stones" src="https://i.imgur.com/mYmmbrp.jpg">
+            <img id="mountains" src="https://codecademy-content.s3.amazonaws.com/courses/learn-a-frame/building-the-environment/mountains2.jpg">
+            <img id="rainbows" src="https://4.bp.blogspot.com/-vBJBPs4STwY/UwVoWAKVmQI/AAAAAAAAKcQ/SSVvk0vQQtI/s1600/1+Make+Rainbows+Using+a+CD.JPG">
+            <img id="rainbow-checkers" src="/pastel-rainbow-checkers.jpg">
+            <a-asset-item id="rainbow-dome" src="/models/dome.gltf"></a-asset-item>
+            <audio id="robots" src="sounds/198970__thehorriblejoke__robotness.mp3"></audio>
+            <audio id="jump" src="sounds/187025__lloydevans09__jump1.wav"></audio>
+        </a-assets>
+
+        <!-- <a-entity environment="preset: dream"></a-entity> -->
+        <!-- <a-sky color="#DDDDDD"></a-sky> -->
+        <a-sky src="#mountains"></a-sky>
+        <!-- <a-sound src="#robots" autoplay="true"></a-sound> -->
+        <a-plane rotation="-90 0 0" width="20" height="20" src="#rainbow-checkers" repeat="10 10"></a-plane>
+        <a-light type="directional" color="#FFF" intensity="0.5" position="-1 1 2"></a-light>
+        <a-light type="ambient" color="#FFF"></a-light>
+        <a-camera position="0 1 4" cursor-visible="true" cursor-scale="2" cursor-color="#0095DD" cursor-opacity="0.5"></a-camera>
+        <a-cube color="#0095DD" rotation="20 40 0" position="0 1 0">
+            <a-animation attribute="rotation" from="20 0 0" to="20 360 0" direction="alternate" dur="4000" repeat="indefinite" easing="ease"></a-animation>
+        </a-cube>
+        <a-entity geometry="primitive: torus; radius: 1; radiusTubular: 0.1; segmentsTubular: 12;" material="color: #EAEFF2; roughness: 0.1; metalness: 0.5;" rotation="10 0 0" position="-3 1 0">
+            <a-animation attribute="scale" to="1 0.5 1" direction="alternate" dur="2000" repeat="indefinite" easing="linear"></a-animation>
+        </a-entity>
+        <a-sound src="#jump" autoplay="true" position="0 2 -3"></a-sound>
+        <a-box src="#stones" position="0 2 -3" rotation="0 45 45" animation="property: object3D.position.y; to: 0.5; dir: alternate; dur: 2000; loop: true">
+            <a-text value="Welcome!" color="purple" position="0 3 -4"></a-text>
+        </a-box>
+
+        <a-gltf-model src="#rainbow-dome" rotation="0 -45 0" position="-4 0 -3" scale=".005 .005 .005"></a-gltf-model>
+    </a-scene>
+    <script>
+        var scene = document.querySelector('a-scene');
+        var cylinder = document.createElement('a-cylinder');
+        //cylinder.setAttribute('color', '#FF9500');
+        cylinder.setAttribute('src', '#rainbows');
+        cylinder.setAttribute('height', '2');
+        cylinder.setAttribute('radius', '0.75');
+        cylinder.setAttribute('position', '3 1 -1');
+        scene.appendChild(cylinder);
+        var t = 0;
+
+        function render() {
+            t += 0.01;
+            requestAnimationFrame(render);
+            cylinder.setAttribute('position', '3 ' + (Math.sin(t * 2) + 1) + ' 0');
+        }
+        render();
+    </script>
+</body>
+
+</html>
